@@ -1,40 +1,12 @@
 import 'dart:async';
 
+import 'package:econometro/databases/base_database.dart';
 import 'package:econometro/models/veiculo.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
 
-class VeiculoDatabase {
+class VeiculoDatabase extends BaseDatabase {
   static final VeiculoDatabase instance = VeiculoDatabase._init();
 
-  static Database? _database;
-
   VeiculoDatabase._init();
-
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-
-    _database = await _initDB('veiculos2.db');
-    return _database!;
-  }
-
-  Future<Database> _initDB(String filepath) async {
-    final dbPath = await getDatabasesPath();
-    final path = p.join(dbPath, filepath);
-
-    return await openDatabase(path, version: 1, onCreate: _createDB);
-  }
-
-  Future<void> _createDB(Database db, int version) async {
-    await db.execute('''
-        create table ${Veiculo.tableName} ( 
-          _id integer primary key autoincrement NOT NULL, 
-          placa text not null,
-          marca text not null,
-          modelo text not null,
-          ano integer not null)
-        ''');
-  }
 
   Future<Veiculo?> getVeiculo(int id) async {
     var db = await instance.database;
@@ -48,7 +20,7 @@ class VeiculoDatabase {
     return null;
   }
 
-  Future<List<Veiculo>> listVeiculos() async {
+  Future<List<Veiculo>> listAllVeiculos() async {
     var db = await instance.database;
 
     List<Map<String, dynamic>> maps = await db.query(Veiculo.tableName, columns: Veiculo.fieldNames, orderBy: '_id');

@@ -39,6 +39,9 @@ dependencies:
   sqflite: ^2.2.2
   provider: ^6.0.5
   path: ^1.8.2
+  grouped_list: ^5.1.2
+  intl: ^0.17.0
+  date_time_picker: "^2.1.0"
 
 dev_dependencies:
   flutter_test:

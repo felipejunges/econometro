@@ -12,15 +12,31 @@ class VeiculoProvider extends ChangeNotifier {
   Future<void> listVeiculos() async {
     var db = await database;
 
-    _veiculos = await db.listVeiculos();
+    _veiculos = await db.listAllVeiculos();
 
     notifyListeners();
+  }
+
+  Future<void> save(Veiculo veiculo) async {
+    if (veiculo.id == null) {
+      return insert(veiculo);
+    } else {
+      return update(veiculo);
+    }
   }
 
   Future<void> insert(Veiculo veiculo) async {
     var db = await database;
 
     await db.insert(veiculo);
+
+    await listVeiculos();
+  }
+
+  Future<void> update(Veiculo veiculo) async {
+    var db = await database;
+
+    await db.update(veiculo);
 
     await listVeiculos();
   }

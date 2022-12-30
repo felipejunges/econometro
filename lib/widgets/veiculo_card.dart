@@ -29,11 +29,18 @@ class VeiculoCard extends StatelessWidget {
           ),
         ),
         ListTile(
-          onLongPress: () => Navigator.push(context, MaterialPageRoute(builder: (context) => VeiculoFormPage())),
-          title: const Text("Honda Civic 2011"),
-          subtitle: const Text("85.000 KM"),
+          onLongPress: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VeiculoFormPage(
+                veiculo: veiculo,
+              ),
+            ),
+          ),
+          title: Text("${veiculo.marca} ${veiculo.modelo} ${veiculo.ano}"),
+          subtitle: Text(veiculo.placa),
           leading: const CircleAvatar(
-            child: Icon(Icons.car_repair),
+            child: Icon(Icons.directions_car),
           ),
           trailing: _teste(),
         ),

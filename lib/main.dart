@@ -1,4 +1,5 @@
 import 'package:econometro/pages/home_page.dart';
+import 'package:econometro/services/abastecimento_provider.dart';
 import 'package:econometro/services/veiculo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<VeiculoProvider>(create: (_) => VeiculoProvider()),
+        ChangeNotifierProvider<AbastecimentoProvider>(create: (_) => AbastecimentoProvider()),
       ],
       child: MaterialApp(
         title: 'Econômetro',
