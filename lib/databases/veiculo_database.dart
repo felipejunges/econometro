@@ -51,10 +51,4 @@ class VeiculoDatabase extends BaseDatabase {
 
     return await db.delete(Veiculo.tableName, where: '_id = ?', whereArgs: [id]);
   }
-
-  Future close() async {
-    var db = await instance.database;
-
-    db.close();
-  }
 }

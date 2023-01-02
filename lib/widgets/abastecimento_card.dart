@@ -1,6 +1,7 @@
 import 'package:econometro/models/abastecimento.dart';
 import 'package:econometro/pages/abastecimentos/abastecimento_form_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 enum AcaoCard { editar, excluir }
 
@@ -26,8 +27,8 @@ class AbastecimentoCard extends StatelessWidget {
             ),
           ),
         ),
-        title: Text("${abastecimento.km} km"),
-        subtitle: Text("${abastecimento.litros} L"),
+        title: Text(DateFormat('dd/MM/yyyy').format(abastecimento.data)),
+        subtitle: Text("${abastecimento.km} km - ${abastecimento.litros} L"),
         leading: const CircleAvatar(
           child: Icon(Icons.directions_car),
         ),

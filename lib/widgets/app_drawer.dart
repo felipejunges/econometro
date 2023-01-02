@@ -44,7 +44,7 @@ class AppDrawer extends StatelessWidget {
               onTap: () => {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const AbastecimentosPage()),
+                  MaterialPageRoute(builder: (context) => AbastecimentosPage()),
                 ),
               },
             ),

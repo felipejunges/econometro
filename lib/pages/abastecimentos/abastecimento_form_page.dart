@@ -10,7 +10,6 @@ class AbastecimentoFormPage extends StatelessWidget {
   AbastecimentoFormPage({super.key, this.abastecimento});
 
   final _globalKey = GlobalKey<FormState>();
-  //final _dataController = TextEditingController();
 
   final _model = AbastecimentoForm();
   final Abastecimento? abastecimento;
@@ -52,9 +51,13 @@ class AbastecimentoFormPage extends StatelessWidget {
         firstDate: DateTime(2000),
         lastDate: DateTime(2100),
         dateLabelText: 'Data',
-        onChanged: (value) => print(value),
         validator: (value) {
-          print(value);
+          if (value?.isEmpty ?? true) {
+            return "A data deve ser informada";
+          }
+          if (DateTime.tryParse(value!) == null) {
+            return 'A data deve ser informada corretamente';
+          }
           return null;
         },
         onSaved: (value) => _model.data = value == null ? null : DateFormat('yyyy-MM-dd').parse(value),
@@ -110,11 +113,16 @@ class AbastecimentoFormPage extends StatelessWidget {
     if (_globalKey.currentState?.validate() ?? false) {
       _globalKey.currentState?.save();
 
+      var provider = Provider.of<AbastecimentoProvider>(context, listen: false);
+
       if (abastecimento?.id != null) {
         _model.id = abastecimento!.id;
+      } else {
+        //_model.veiculoId = provider.veiculoSelecionadoId;
+        _model.veiculoId = 1;
       }
 
-      Provider.of<AbastecimentoProvider>(context, listen: false)
+      provider
           .save(
             _model.toAbastecimento(),
           )

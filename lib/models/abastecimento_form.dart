@@ -6,6 +6,7 @@ class AbastecimentoForm {
   int? km;
   double? litros;
   double? valorLitro;
+  int? veiculoId;
 
   Abastecimento toAbastecimento() {
     return Abastecimento(
@@ -14,6 +15,7 @@ class AbastecimentoForm {
       km: km ?? 0,
       litros: litros ?? 0,
       valorLitro: valorLitro,
+      veiculoId: veiculoId ?? 0,
     );
   }
 }

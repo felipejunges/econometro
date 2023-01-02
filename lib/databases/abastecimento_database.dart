@@ -18,10 +18,16 @@ class AbastecimentoDatabase extends BaseDatabase {
     return null;
   }
 
-  Future<List<Abastecimento>> listAllAbastecimentos() async {
+  Future<List<Abastecimento>> listAllAbastecimentos(int veiculoId) async {
     var db = await instance.database;
 
-    List<Map<String, dynamic>> maps = await db.query(Abastecimento.tableName, columns: Abastecimento.fieldNames, orderBy: '_id');
+    List<Map<String, dynamic>> maps = await db.query(
+      Abastecimento.tableName,
+      columns: Abastecimento.fieldNames,
+      where: 'veiculo_id = ?',
+      whereArgs: [veiculoId],
+      orderBy: '_id',
+    );
 
     if (maps.isNotEmpty) {
       return maps.map((e) => Abastecimento.fromMap(e)).toList();
@@ -48,11 +54,5 @@ class AbastecimentoDatabase extends BaseDatabase {
     var db = await instance.database;
 
     return await db.delete(Abastecimento.tableName, where: '_id = ?', whereArgs: [id]);
-  }
-
-  Future close() async {
-    var db = await instance.database;
-
-    db.close();
   }
 }

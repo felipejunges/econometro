@@ -6,6 +6,7 @@ class Abastecimento {
   final int km;
   final double litros;
   final double? valorLitro;
+  final int veiculoId;
 
   Abastecimento({
     this.id,
@@ -13,10 +14,11 @@ class Abastecimento {
     required this.km,
     required this.litros,
     this.valorLitro,
+    required this.veiculoId,
   });
 
   static String tableName = "abastecimentos";
-  static List<String> fieldNames = ['_id', 'data', 'km', 'litros', 'valor_litro'];
+  static List<String> fieldNames = ['_id', 'data', 'km', 'litros', 'valor_litro', 'veiculo_id'];
 
   // combustivel
   // posto
@@ -27,7 +29,8 @@ class Abastecimento {
         data = DateFormat('yyyy-MM-dd').parse(res['data']),
         km = res["km"],
         litros = res["litros"],
-        valorLitro = res["valor_litro"];
+        valorLitro = res["valor_litro"],
+        veiculoId = res["veiculo_id"];
 
   Map<String, Object?> toMap() => {
         '_id': id,
@@ -35,6 +38,7 @@ class Abastecimento {
         'km': km,
         'litros': litros,
         'valor_litro': valorLitro,
+        'veiculo_id': veiculoId,
       };
 
   Abastecimento copy({
@@ -43,12 +47,13 @@ class Abastecimento {
     int? km,
     double? litros,
     double? valorLitro,
+    int? veiculoId,
   }) =>
       Abastecimento(
-        id: id ?? this.id,
-        data: data ?? this.data,
-        km: km ?? this.km,
-        litros: litros ?? this.litros,
-        valorLitro: valorLitro ?? this.valorLitro,
-      );
+          id: id ?? this.id,
+          data: data ?? this.data,
+          km: km ?? this.km,
+          litros: litros ?? this.litros,
+          valorLitro: valorLitro ?? this.valorLitro,
+          veiculoId: veiculoId ?? this.veiculoId);
 }

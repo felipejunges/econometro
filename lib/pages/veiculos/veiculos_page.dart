@@ -16,7 +16,7 @@ class VeiculosPage extends StatelessWidget {
       drawer: const AppDrawer(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => VeiculoFormPage())),
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const VeiculoFormPage())),
       ),
       body: _page(context),
     );

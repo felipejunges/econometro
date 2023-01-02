@@ -9,7 +9,7 @@ abstract class BaseDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('veiculos4.db');
+    _database = await _initDB('veiculos.db');
     return _database!;
   }
 
@@ -24,10 +24,10 @@ abstract class BaseDatabase {
     await db.execute('''
         create table ${Veiculo.tableName} ( 
           _id integer primary key autoincrement NOT NULL, 
-          placa text not null,
-          marca text not null,
-          modelo text not null,
-          ano integer not null
+          placa TEXT NOT NULL,
+          marca TEXT NOT NULL,
+          modelo TEXT NOT NULL,
+          ano INTEGER NOT NULL
         )''');
 
     await db.execute('''
@@ -40,5 +40,10 @@ abstract class BaseDatabase {
           valor_litro real NULL,
           FOREIGN KEY (veiculo_id) REFERENCES ${Veiculo.tableName} (_id)
         )''');
+  }
+
+  Future close() async {
+    var db = await database;
+    db.close();
   }
 }

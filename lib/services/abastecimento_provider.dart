@@ -6,13 +6,16 @@ class AbastecimentoProvider extends ChangeNotifier {
   AbastecimentoDatabase? _database;
   Future<AbastecimentoDatabase> get database => _initDatabase();
 
-  List<Abastecimento> _abastecimentos = [];
-  List<Abastecimento> get abastecimentos => List.from(_abastecimentos);
+  List<Abastecimento> abastecimentos = [];
 
-  Future<void> listVeiculos() async {
+  int? veiculoSelecionadoId;
+
+  AbastecimentoProvider({required this.abastecimentos, this.veiculoSelecionadoId});
+
+  Future<void> listAbastecimentos() async {
     var db = await database;
 
-    _abastecimentos = await db.listAllAbastecimentos();
+    abastecimentos = await db.listAllAbastecimentos(veiculoSelecionadoId ?? 0);
 
     notifyListeners();
   }
@@ -30,7 +33,7 @@ class AbastecimentoProvider extends ChangeNotifier {
 
     await db.insert(abastecimento);
 
-    await listVeiculos();
+    await listAbastecimentos();
   }
 
   Future<void> update(Abastecimento abastecimento) async {
@@ -38,7 +41,7 @@ class AbastecimentoProvider extends ChangeNotifier {
 
     await db.update(abastecimento);
 
-    await listVeiculos();
+    await listAbastecimentos();
   }
 
   Future<AbastecimentoDatabase> _initDatabase() async {
@@ -48,11 +51,12 @@ class AbastecimentoProvider extends ChangeNotifier {
     return _database!;
   }
 
-  @override
-  void dispose() async {
-    super.dispose();
+  // @override
+  // void dispose() async {
+  //   super.dispose();
 
-    var db = await database;
-    db.close();
-  }
+  //   // TODO: resolver este problema
+  //   //var db = await database;
+  //   //db.close();
+  // }
 }

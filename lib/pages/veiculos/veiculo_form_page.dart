@@ -4,12 +4,19 @@ import 'package:econometro/services/veiculo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class VeiculoFormPage extends StatelessWidget {
-  VeiculoFormPage({super.key, this.veiculo});
+class VeiculoFormPage extends StatefulWidget {
+  const VeiculoFormPage({super.key, this.veiculo});
 
-  final _globalKey = GlobalKey<FormState>();
-  final _model = VeiculoForm();
   final Veiculo? veiculo;
+
+  @override
+  State<VeiculoFormPage> createState() => _VeiculoFormPageState();
+}
+
+class _VeiculoFormPageState extends State<VeiculoFormPage> {
+  final _globalKey = GlobalKey<FormState>();
+
+  final _model = VeiculoForm();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +49,8 @@ class VeiculoFormPage extends StatelessWidget {
         decoration: const InputDecoration(
           label: Text('Placa'),
         ),
-        initialValue: veiculo?.placa,
+        textCapitalization: TextCapitalization.characters,
+        initialValue: widget.veiculo?.placa,
         onSaved: (value) => _model.placa = value,
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -55,7 +63,8 @@ class VeiculoFormPage extends StatelessWidget {
         decoration: const InputDecoration(
           label: Text('Marca'),
         ),
-        initialValue: veiculo?.marca,
+        textCapitalization: TextCapitalization.words,
+        initialValue: widget.veiculo?.marca,
         onSaved: (value) => _model.marca = value,
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -68,7 +77,8 @@ class VeiculoFormPage extends StatelessWidget {
         decoration: const InputDecoration(
           label: Text('Modelo'),
         ),
-        initialValue: veiculo?.modelo,
+        textCapitalization: TextCapitalization.words,
+        initialValue: widget.veiculo?.modelo,
         onSaved: (value) => _model.modelo = value,
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -81,7 +91,7 @@ class VeiculoFormPage extends StatelessWidget {
         decoration: const InputDecoration(
           label: Text('Ano'),
         ),
-        initialValue: veiculo?.ano.toString(),
+        initialValue: widget.veiculo?.ano.toString(),
         keyboardType: TextInputType.number,
         onSaved: (value) => _model.ano = value == null ? null : int.parse(value),
         validator: (value) {
@@ -103,8 +113,8 @@ class VeiculoFormPage extends StatelessWidget {
     if (_globalKey.currentState?.validate() ?? false) {
       _globalKey.currentState?.save();
 
-      if (veiculo?.id != null) {
-        _model.id = veiculo!.id;
+      if (widget.veiculo?.id != null) {
+        _model.id = widget.veiculo!.id;
       }
 
       Provider.of<VeiculoProvider>(context, listen: false)

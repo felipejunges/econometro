@@ -16,7 +16,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<VeiculoProvider>(create: (_) => VeiculoProvider()),
-        ChangeNotifierProvider<AbastecimentoProvider>(create: (_) => AbastecimentoProvider()),
+        ChangeNotifierProxyProvider<VeiculoProvider, AbastecimentoProvider>(
+          create: (context) => AbastecimentoProvider(abastecimentos: []),
+          update: (context, veiculoProvider, anterior) => AbastecimentoProvider(
+            abastecimentos: anterior?.abastecimentos ?? [],
+            veiculoSelecionadoId: veiculoProvider.veiculoSelecionadoId,
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'Econômetro',

@@ -37,6 +37,7 @@ class Veiculo {
     String? marca,
     String? modelo,
     int? ano,
+    bool? ativo,
   }) =>
       Veiculo(
         id: id ?? this.id,
